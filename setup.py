@@ -1,15 +1,29 @@
 """A setuptools based setup module.
-
 See:
 https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
-
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 # To use a consistent encoding
 from codecs import open
 from os import path
+import os
+from distutils.command.register import register as register_orig
+from distutils.command.upload import upload as upload_orig
+
+#from setuptools import setup
+
+class register(register_orig):
+
+    def _get_rc_file(self):
+        return os.path.join('.', '.pypirc')
+
+class upload(upload_orig):
+
+    def _get_rc_file(self):
+        return os.path.join('.', '.pypirc')
+
 
 here = path.abspath(path.dirname(__file__))
 
@@ -61,50 +75,49 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    #url='https://github.com/pypa/sampleproject',  # Optional
-    url='https://bitbucket.anthem.com/scm/bdf/bdf-rscz-etl-poc.git/samplepython'
+    url='https://bitbucket.anthem.com/scm/bdf/bdf-rscz-etl-poc.git/samplepython',  # Optional
 
     # This should be your name or the name of the organization which owns the
     # project.
-    #author='The Python Packaging Authority',  # Optional
+    author='The Python Packaging Authority',  # Optional
 
     # This should be a valid email address corresponding to the author listed
     # above.
-    #author_email='pypa-dev@googlegroups.com',  # Optional
+    author_email='pypa-dev@googlegroups.com',  # Optional
 
     # Classifiers help users find your project by categorizing it.
     #
     # For a list of valid classifiers, see
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
-    #classifiers=[  # Optional
+    classifiers=[  # Optional
         # How mature is this project? Common values are
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        #'Development Status :: 3 - Alpha',
+        'Development Status :: 3 - Alpha',
 
         # Indicate who your project is intended for
-        #'Intended Audience :: Developers',
-        #'Topic :: Software Development :: Build Tools',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development :: Build Tools',
 
         # Pick your license as you wish
-        #'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: MIT License',
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        #'Programming Language :: Python :: 2',
-        #'Programming Language :: Python :: 2.7',
-        #'Programming Language :: Python :: 3',
-        #'Programming Language :: Python :: 3.4',
-        #'Programming Language :: Python :: 3.5',
-        #'Programming Language :: Python :: 3.6',
-    #]
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+    ],
 
     # This field adds keywords for your project which will appear on the
     # project page. What does your project relate to?
     #
     # Note that this is a string of words separated by whitespace, not a list.
-    #keywords='sample setuptools development',  # Optional
+    keywords='sample setuptools development',  # Optional
 
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
@@ -144,7 +157,7 @@ setup(
     # If using Python 2.6 or earlier, then these have to be included in
     # MANIFEST.in as well.
     package_data={  # Optional
-        'sample': ['package_data.dat'],
+        'samplepython': ['sample/*.dat'],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
@@ -152,7 +165,7 @@ setup(
     # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
     #
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    data_files=[('my_data', ['data/data_file'])],  # Optional
+    data_files=[('my_data', ['samplepython/data/data_file'])],  # Optional
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
@@ -176,10 +189,4 @@ setup(
     # issues, where the source is hosted, where to say thanks to the package
     # maintainers, and where to support the project financially. The key is
     # what's used to render the link text on PyPI.
-    project_urls={  # Optional
-        'Bug Reports': 'https://github.com/pypa/sampleproject/issues',
-        'Funding': 'https://donate.pypi.org',
-        #'Say Thanks!': 'http://saythanks.io/to/example',
-        #'Source': 'https://github.com/pypa/sampleproject/',
-    },
 )
